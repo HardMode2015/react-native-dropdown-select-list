@@ -98,6 +98,7 @@ const SelectList: React.FC<SelectListProps> =  ({
      */
         const onPressClose = React.useCallback(() => {
             setOpen(false);
+            setDropdown(false)
             onClose();
         }, [setOpen, onClose]);
     
@@ -106,6 +107,7 @@ const SelectList: React.FC<SelectListProps> =  ({
          */
         const onPressOpen = React.useCallback(() => {
             setOpen(true);
+            setDropdown(true)
             onOpen();
         }, [setOpen, onOpen]);
     
