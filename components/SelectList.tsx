@@ -34,6 +34,7 @@ const SelectList: React.FC<SelectListProps> =  ({
         disabledItemStyles,
         disabledTextStyles,
         onSelect = () => {},
+        setOpen = () => {},
         onOpen = () => {},
         onClose = () => {},
         onPress = (open) => {},
@@ -44,7 +45,7 @@ const SelectList: React.FC<SelectListProps> =  ({
 
     const oldOption = React.useRef(null)
     const [_firstRender,_setFirstRender] = React.useState<boolean>(true);
-    const [open, setOpen] = React.useState<boolean>(true);
+    // const [open, setOpen] = React.useState<boolean>(true);
     const [dropdown, setDropdown] = React.useState<boolean>(dropdownShown);
     const [selectedval, setSelectedVal] = React.useState<any>("");
     const [height,setHeight] = React.useState<number>(200)

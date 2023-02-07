@@ -2,6 +2,8 @@
 import type * as React from "react";
 import { ViewStyle, TextStyle } from 'react-native';
 
+type SetStateValue<S> = ((prevState: S) => S);
+
 export interface SelectListProps  {
     /**
     * Fn to set Selected option value which will be stored in your local state
@@ -84,7 +86,10 @@ export interface SelectListProps  {
     onClose?: () => void,
 
     onPress?: (open: boolean) => void;
-    
+
+    setOpen: React.Dispatch<SetStateValue<boolean>>;
+
+
     open: boolean;
     /**
     * set fontFamily of whole component Text 
