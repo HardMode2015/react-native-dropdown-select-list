@@ -15,6 +15,7 @@ import { SelectListProps } from '..';
 type L1Keys = { key?: any; value?: any; disabled?: boolean | undefined }
 
 const SelectList: React.FC<SelectListProps> =  ({
+        open,
         setSelected,
         placeholder,
         boxStyles,
