@@ -35,6 +35,7 @@ const SelectList: React.FC<SelectListProps> =  ({
         disabledTextStyles,
         onSelect = () => {},
         onOpen = () => {},
+        onClose = () => {},
         save = 'key',
         dropdownShown = false,
         fontFamily
@@ -89,9 +90,37 @@ const SelectList: React.FC<SelectListProps> =  ({
     },[selectedval])
 
 
-    React.useEffect(() => {
-        setOpen(!open)
-    },[open])
+        /**
+     * onPressClose.
+     */
+        const onPressClose = React.useCallback(() => {
+            setOpen(false);
+            onClose();
+        }, [setOpen, onClose]);
+    
+        /**
+         * onPressClose.
+         */
+        const onPressOpen = React.useCallback(() => {
+            setOpen(true);
+            onOpen();
+        }, [setOpen, onOpen]);
+    
+        /**
+         * onPressToggle.
+         */
+        const onPressToggle = React.useCallback(() => {
+            const isOpen = ! open;
+    
+            setOpen(isOpen);
+    
+            if (isOpen)
+                onOpen();
+            else
+                onClose();
+    
+            return isOpen;
+        }, [open, setOpen, onOpen, onClose]);
   
 
     React.useEffect(() => {
