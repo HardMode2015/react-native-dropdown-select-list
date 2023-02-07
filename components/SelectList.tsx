@@ -36,6 +36,7 @@ const SelectList: React.FC<SelectListProps> =  ({
         onSelect = () => {},
         onOpen = () => {},
         onClose = () => {},
+        onPress = (open) => {},
         save = 'key',
         dropdownShown = false,
         fontFamily
@@ -121,6 +122,20 @@ const SelectList: React.FC<SelectListProps> =  ({
     
             return isOpen;
         }, [open, setOpen, onOpen, onClose]);
+
+    /**
+     * onPress.
+     */
+    const __onPress = React.useCallback(async () => {
+        const isOpen = ! open;
+
+        onPress(isOpen);
+        onPressToggle();
+    }, [
+        open,
+        onPressToggle,
+        onPress,
+    ]);
   
 
     React.useEffect(() => {

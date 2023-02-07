@@ -83,7 +83,8 @@ export interface SelectListProps  {
 
     onClose?: () => void,
 
-
+    onPress?: (open: boolean) => void;
+    
     open: boolean;
     /**
     * set fontFamily of whole component Text 
