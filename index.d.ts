@@ -77,7 +77,11 @@ export interface SelectListProps  {
     * Trigger an action when option is selected
     */
     onSelect?: () => void,
+    
+    onOpen?: () => void,
 
+
+    onClose?: () => void,
     /**
     * set fontFamily of whole component Text 
     */
