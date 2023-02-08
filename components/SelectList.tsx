@@ -15,7 +15,6 @@ import { SelectListProps } from '..';
 type L1Keys = { key?: any; value?: any; disabled?: boolean | undefined }
 
 const SelectList: React.FC<SelectListProps> =  ({
-        open,
         setSelected,
         placeholder,
         boxStyles,
@@ -35,10 +34,6 @@ const SelectList: React.FC<SelectListProps> =  ({
         disabledItemStyles,
         disabledTextStyles,
         onSelect = () => {},
-        onPress = (open) => {},
-        onOpen = () => {},
-        setOpen = () => {},
-        onClose = () => {},
         save = 'key',
         dropdownShown = false,
         fontFamily
@@ -71,60 +66,6 @@ const SelectList: React.FC<SelectListProps> =  ({
             
         }).start(() => setDropdown(false))
     }
-
-
-
-     /**
-     * onPress.
-     */
-     const __onPress = React.useCallback(async () => {
-        const isOpen = ! open;
-
-        setDropdown(isOpen);
-        onPress(isOpen);
-        onPressToggle();
-    }, [
-        open,
-        onPressToggle,
-        onPress,
-    ]);
-
-
-    /**
-     * onPressClose.
-     */
-    const onPressClose = React.useCallback(() => {
-        setOpen(false);
-        setDropdown(false);
-        onClose();
-    }, [setOpen, onClose]);
-
-    /**
-     * onPressClose.
-     */
-    const onPressOpen = React.useCallback(() => {
-        setOpen(true);
-        setDropdown(true);
-        onOpen();
-    }, [setOpen, onOpen]);
-
-    /**
-     * onPressToggle.
-     */
-    const onPressToggle = React.useCallback(() => {
-        const isOpen = ! open;
-
-        setOpen(isOpen);
-        setDropdown(isOpen);
-
-        if (isOpen)
-            onOpen();
-        else
-            onClose();
-
-        return isOpen;
-    }, [open, setOpen, onOpen, onClose]);
-
 
     React.useEffect( () => {
         if(maxHeight)
@@ -227,7 +168,7 @@ const SelectList: React.FC<SelectListProps> =  ({
                         
                     </View>
                 :
-                    <TouchableOpacity style={[styles.wrapper,boxStyles]} onPress={__onPress}>
+                    <TouchableOpacity style={[styles.wrapper,boxStyles]} onPress={() => { if(!dropdown){ slidedown() }else{ slideup() } }}>
                         <Text style={[{fontFamily},inputStyles]}>{ (selectedval == "") ? (placeholder) ? placeholder : 'Select option' : selectedval  }</Text>
                         {
                             (!arrowicon)
