@@ -81,6 +81,7 @@ export interface SelectListProps  {
     onSelect?: () => void,
 
 
+    open: boolean;
     onPress?: (open: boolean) => void;
     onOpen?: () => void;
     setOpen: React.Dispatch<SetStateValue<boolean>>;
