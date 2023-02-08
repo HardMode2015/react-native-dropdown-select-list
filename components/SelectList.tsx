@@ -15,7 +15,6 @@ import { SelectListProps } from '..';
 type L1Keys = { key?: any; value?: any; disabled?: boolean | undefined }
 
 const SelectList: React.FC<SelectListProps> =  ({
-        open,
         setSelected,
         placeholder,
         boxStyles,
@@ -35,10 +34,10 @@ const SelectList: React.FC<SelectListProps> =  ({
         disabledItemStyles,
         disabledTextStyles,
         onSelect = () => {},
-        setOpen = () => {},
-        onOpen = () => {},
-        onClose = () => {},
         onPress = (open) => {},
+        onOpen = () => {},
+        setOpen = () => {},
+        onClose = () => {},
         save = 'key',
         dropdownShown = false,
         fontFamily
@@ -46,7 +45,6 @@ const SelectList: React.FC<SelectListProps> =  ({
 
     const oldOption = React.useRef(null)
     const [_firstRender,_setFirstRender] = React.useState<boolean>(true);
-    // const [open, setOpen] = React.useState<boolean>(true);
     const [dropdown, setDropdown] = React.useState<boolean>(dropdownShown);
     const [selectedval, setSelectedVal] = React.useState<any>("");
     const [height,setHeight] = React.useState<number>(200)
@@ -73,6 +71,60 @@ const SelectList: React.FC<SelectListProps> =  ({
         }).start(() => setDropdown(false))
     }
 
+
+
+     /**
+     * onPress.
+     */
+     const __onPress = React.useCallback(async () => {
+        const isOpen = ! open;
+
+        setDropdown(isOpen);
+        onPress(isOpen);
+        onPressToggle();
+    }, [
+        open,
+        onPressToggle,
+        onPress,
+    ]);
+
+
+    /**
+     * onPressClose.
+     */
+    const onPressClose = React.useCallback(() => {
+        setOpen(false);
+        setDropdown(false);
+        onClose();
+    }, [setOpen, onClose]);
+
+    /**
+     * onPressClose.
+     */
+    const onPressOpen = React.useCallback(() => {
+        setOpen(true);
+        setDropdown(true);
+        onOpen();
+    }, [setOpen, onOpen]);
+
+    /**
+     * onPressToggle.
+     */
+    const onPressToggle = React.useCallback(() => {
+        const isOpen = ! open;
+
+        setOpen(isOpen);
+        setDropdown(isOpen);
+
+        if (isOpen)
+            onOpen();
+        else
+            onClose();
+
+        return isOpen;
+    }, [open, setOpen, onOpen, onClose]);
+
+
     React.useEffect( () => {
         if(maxHeight)
             setHeight(maxHeight)
@@ -91,55 +143,6 @@ const SelectList: React.FC<SelectListProps> =  ({
         }
         onSelect()
     },[selectedval])
-
-
-        /**
-     * onPressClose.
-     */
-        const onPressClose = React.useCallback(() => {
-            setOpen(false);
-            setDropdown(false)
-            onClose();
-        }, [setOpen, onClose]);
-    
-        /**
-         * onPressClose.
-         */
-        const onPressOpen = React.useCallback(() => {
-            setOpen(true);
-            setDropdown(true)
-            onOpen();
-        }, [setOpen, onOpen]);
-    
-        /**
-         * onPressToggle.
-         */
-        const onPressToggle = React.useCallback(() => {
-            const isOpen = ! open;
-    
-            setOpen(isOpen);
-    
-            if (isOpen)
-                onOpen();
-            else
-                onClose();
-    
-            return isOpen;
-        }, [open, setOpen, onOpen, onClose]);
-
-    /**
-     * onPress.
-     */
-    const __onPress = React.useCallback(async () => {
-        const isOpen = ! open;
-
-        onPress(isOpen);
-        onPressToggle();
-    }, [
-        open,
-        onPressToggle,
-        onPress,
-    ]);
   
 
     React.useEffect(() => {
